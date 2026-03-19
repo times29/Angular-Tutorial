@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HousingService } from '../housing';
 import { HousingLocationInfo } from '../housinglocation';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-details',
@@ -45,7 +45,9 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
               <input id="last-name" type="text" formControlName="lastName" />
               <label for="email">Email</label>
               <input id="email" type="email" formControlName="email" />
-              <button type="submit" class="primary">Apply now</button>
+              <button type="submit" class="primary" [disabled]="applyForm.invalid">
+                Apply now
+              </button>
             </form>
           </section>
         }
@@ -64,9 +66,9 @@ export class Details {
   housingLocationId: number | undefined = undefined;
   housingLocation: HousingLocationInfo | undefined;
   applyForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl(''),
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
   });
 
   constructor() {
