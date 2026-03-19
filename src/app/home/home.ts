@@ -16,6 +16,8 @@ import { HousingService } from '../housing';
     <section class="results">
       @for (housingLocation of filteredLocationList; track $index) {
         <app-housing-location [housingLocation]="housingLocation" />
+      } @empty {
+        No houses found
       }
     </section>
   `,
